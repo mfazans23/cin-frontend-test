@@ -41,7 +41,11 @@ const HomePage: React.FC = () => {
               Welcome to your giphy
             </h1>
             <div className='flex justify-center items-center gap-4'>
-              <img src='./assets/giphy-logo.svg' alt='' className='w-28' />
+              <img
+                src='https://res.cloudinary.com/delclboja/image/upload/v1690626787/giphy_kadq3q.png'
+                alt=''
+                className='w-28'
+              />
               <h1 className='uppercase text-8xl font-black tracking-tighter'>
                 Giphy
               </h1>
