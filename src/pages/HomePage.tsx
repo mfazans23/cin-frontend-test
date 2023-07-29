@@ -1,79 +1,58 @@
-// HalamanUtama.tsx
 import React, { useState } from 'react'
 import SearchBar from '../components/SearchBar'
 import GifList from '../components/GifList'
-import { getIronManGifs, searchGifs, Gif } from '../api'
-
-enum View {
-  HOME,
-  IRON_MAN_GIPHY,
-  SEARCH_GIPHY,
-}
+import { getIronManGifs, searchGifs } from '../api'
+import Gif from '../types/Gif'
+import { View } from '../enums/View'
+import Spinner from '../components/Spinner'
+import Landing from '../components/Landing'
 
 const HomePage: React.FC = () => {
   const [view, setView] = useState<View>(View.HOME)
   const [gifs, setGifs] = useState<Gif[]>([])
-  const [title, setTitle] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+  const [message, setMessage] = useState<string>('')
 
   const handleIronManGiphyClick = async () => {
-    setView(View.IRON_MAN_GIPHY)
+    setLoading(true)
+    setView(View.IRON_MAN_VIEW)
     const ironManGifs = await getIronManGifs()
     setGifs(ironManGifs)
-    setTitle('Iron man giphy')
+    setLoading(false)
   }
 
   const handleSearchGiphyClick = () => {
-    setView(View.SEARCH_GIPHY)
-    setTitle('Search your giphy')
+    setView(View.SEARCH_VIEW)
   }
 
   const handleSearch = async (query: string) => {
+    setMessage('')
+    setLoading(true)
     const searchResult = await searchGifs(query)
     setGifs(searchResult)
+    setLoading(false)
+    if (searchResult.length === 0) setMessage('result not found')
   }
 
   return (
-    <div className='min-h-screen' style={{ paddingTop: '110px' }}>
-      {view === View.HOME && (
-        <>
-          <div className='flex flex-col items-center'>
-            <h1 className='uppercase tracking-tighter font-bold text-5xl mb-20'>
-              Welcome to your giphy
+    <div className='min-h-screen'>
+      {view === View.HOME ? (
+        <Landing
+          handleIronManGiphyClick={handleIronManGiphyClick}
+          handleSearchGiphyClick={handleSearchGiphyClick}
+        />
+      ) : (
+        <div className='pt-12 sm:pt-20 md:pt-28'>
+          {view === View.SEARCH_VIEW ? (
+            <SearchBar onSearch={handleSearch} />
+          ) : (
+            <h1 className='text-gray-800 uppercase font-bold text-2xl text-center sm:text-4xl'>
+              Iron man giphy
             </h1>
-            <div className='flex justify-center items-center gap-4'>
-              <img
-                src='https://res.cloudinary.com/delclboja/image/upload/v1690626787/giphy_kadq3q.png'
-                alt=''
-                className='w-28'
-              />
-              <h1 className='uppercase text-8xl font-black tracking-tighter'>
-                Giphy
-              </h1>
-            </div>
-          </div>
-          <div className='flex flex-col items-center gap-4 mt-20'>
-            <button
-              className='uppercase text-blue-800 border-b border-dashed border-blue-800'
-              onClick={handleIronManGiphyClick}
-            >
-              Iron Man Giphy
-            </button>
-            <button
-              className='uppercase text-blue-800 border-b border-dashed border-blue-800'
-              onClick={handleSearchGiphyClick}
-            >
-              Search Your Giphy
-            </button>
-          </div>
-        </>
+          )}
+          {loading ? <Spinner /> : <GifList gifs={gifs} message={message} />}
+        </div>
       )}
-
-      {view !== View.HOME && (
-        <h1 className='uppercase font-bold text-3xl text-center'>{title}</h1>
-      )}
-      {view === View.SEARCH_GIPHY && <SearchBar onSearch={handleSearch} />}
-      {view === View.SEARCH_GIPHY && <GifList gifs={gifs} />}
-      {view === View.IRON_MAN_GIPHY && <GifList gifs={gifs} />}
     </div>
   )
 }

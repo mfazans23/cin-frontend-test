@@ -3,6 +3,8 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300;400;500;600;700&display=swap');
+
 * {
   margin: 0;
   padding: 0;
@@ -10,5 +12,61 @@
 }
 
 body {
-  font-family: sans-serif;
+  font-family: 'Signika', sans-serif;
+}
+
+.responsive-width {
+  width: 75vw;
+  height: 75vw;
+}
+
+.responsive-gap {
+  gap: 14vw 0;
+  margin-left: 12.5vw;
+  margin-right: 12.5vw;
+}
+
+@media (min-width: 476px) {
+  .responsive-width {
+    width: 38vw;
+    height: 38vw;
+  }
+
+  .responsive-gap {
+    gap: 12vw 8vw;
+    margin-left: 8vw;
+    margin-right: 8vw;
+  }
+}
+
+@media (min-width: 640px) {
+  .responsive-gap {
+    gap: 8vw;
+    margin-left: 8vw;
+    margin-right: 8vw;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-width {
+    width: 27vw;
+    height: 27vw;
+  }
+  .responsive-gap {
+    gap: 8vw 4.75vw;
+    margin-left: 4.75vw;
+    margin-right: 4.75vw;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-width {
+    width: 20vw;
+    height: 20vw;
+  }
+  .responsive-gap {
+    gap: 7vw 3vw;
+    margin-left: 4.8vw;
+    margin-right: 4.8vw;
+  }
 }

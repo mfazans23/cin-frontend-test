@@ -1,6 +1,5 @@
-// GifItem.tsx
 import React from 'react'
-import { Gif } from '../api'
+import Gif from '../types/Gif'
 
 interface GifItemProps {
   gif: Gif
@@ -8,10 +7,7 @@ interface GifItemProps {
 
 const GifItem: React.FC<GifItemProps> = ({ gif }) => {
   return (
-    <div
-      className='bg-gray-200 relative border-8 border-gray-200 rounded'
-      style={{ minWidth: '25vw', minHeight: '25vw' }}
-    >
+    <div className='responsive-width bg-gray-200 relative border-4 border-slate-300 rounded'>
       <div className='w-full h-full'>
         <img
           src={gif.imageUrl}
@@ -19,7 +15,7 @@ const GifItem: React.FC<GifItemProps> = ({ gif }) => {
           className='absolute inset-0 w-full h-full object-cover'
         />
       </div>
-      <div className='text-center text-gray-800 text-lg font-bold capitalize mt-4'>
+      <div className='text-base text-center text-gray-800 capitalize mt-2 sm:text-lg md:text-xl'>
         {gif.title}
       </div>
     </div>

@@ -1,18 +1,20 @@
-// GifList.tsx
 import React from 'react'
 import GifItem from './GifItem'
-import { Gif } from '../api'
+import Gif from '../types/Gif'
 
 interface GifListProps {
   gifs: Gif[]
+  message: string
 }
 
-const GifList: React.FC<GifListProps> = ({ gifs }) => {
+const GifList: React.FC<GifListProps> = ({ gifs, message }) => {
   return (
-    <div className='flex flex-wrap' style={{ gap: '6vw', margin: '75px 5vw' }}>
-      {gifs.map((gif) => (
-        <GifItem key={gif.id} gif={gif} />
-      ))}
+    <div className='responsive-gap flex flex-wrap mt-6 sm:mt-12 md:mt-24'>
+      {!message ? (
+        gifs.map((gif) => <GifItem key={gif.id} gif={gif} />)
+      ) : (
+        <h2 className='capitalize text-red-500 text-4xl mx-auto'>{message}</h2>
+      )}
     </div>
   )
 }

@@ -1,18 +1,7 @@
 // api.ts
 import axios from 'axios'
 import { GIPHY_API_KEY } from './config'
-
-export interface Gif {
-  id: string
-  title: string
-  images: {
-    fixed_height: {
-      url: string
-    }
-  }
-  // Add the imageUrl property to the Gif interface
-  imageUrl: string
-}
+import Gif from './types/Gif'
 
 const BASE_URL = 'https://api.giphy.com/v1/gifs'
 
@@ -51,7 +40,6 @@ export const searchGifs = async (query: string): Promise<Gif[]> => {
       },
     })
 
-    // Map the API response to include the imageUrl property
     const searchResult: Gif[] = response.data.data.map((gif: Gif) => ({
       id: gif.id,
       title: gif.title,
